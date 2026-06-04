@@ -21,25 +21,52 @@ jobs:
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 22
           script: |
-            cd /var/www/AgentTrust
-            
-            # Pull latest changes from GitHub
-            git pull origin main
-            
-            # Restart database services if changes occurred
-            docker-compose up -d --remove-orphans
-            
-            # Re-install dependencies & reload backend
+            set -e
+
+            # --- Set domain paths ---
+            APP_DIR="$HOME/domains/agenttrust.zeeideas.com"
+            PUBLIC_HTML="$APP_DIR/public_html"
+
+            # Create directory if it doesn't exist
+            mkdir -p "$APP_DIR"
+
+            # Clone or pull latest changes
+            if [ -d "$APP_DIR/.git" ]; then
+              cd "$APP_DIR"
+              git pull origin main
+            else
+              git clone https://github.com/${{ secrets.GITHUB_REPOSITORY }} "$APP_DIR"
+              cd "$APP_DIR"
+            fi
+
+            # --- Install root-level dependencies ---
+            npm install --legacy-peer-deps
+
+            # --- Install frontend deps & build (copies build/ to root) ---
+            npm run build
+
+            # --- Copy .htaccess to public_html for Apache proxy ---
+            cp .htaccess "$PUBLIC_HTML/.htaccess"
+
+            # --- Backend: install Python deps ---
             cd backend
+            if [ ! -d "venv" ]; then
+              python3 -m venv venv
+            fi
             source venv/bin/activate
             pip install -r requirements.txt
             deactivate
-            sudo systemctl restart agenttrust-backend
-            
-            # Re-install dependencies, build & reload frontend
-            cd ../frontend
-            npm install --legacy-peer-deps
-            npm run build
-            sudo systemctl restart agenttrust-frontend
-            
-            echo "Deployment Completed Successfully!"
+
+            # --- Restart backend service ---
+            sudo systemctl restart agenttrust-backend || true
+
+            # --- Restart Node.js app via Hostinger panel (pm2 or node) ---
+            # Stop any existing node process on port 3000
+            pkill -f "node server.js" || true
+            sleep 1
+
+            # Start the Node.js server in the background
+            cd "$APP_DIR"
+            nohup node server.js > logs/node.log 2>&1 &
+
+            echo "✅ Deployment Completed Successfully!"

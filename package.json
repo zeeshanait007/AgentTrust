@@ -13,7 +13,8 @@
     "test:backend": "cd backend && python3 -m pytest test_api.py",
     "build:frontend": "cd frontend && npm run build",
     "prebuild": "npm install --prefix frontend --legacy-peer-deps",
-    "build": "npm run build:frontend && cp -r frontend/.next .next"
+    "build": "npm run build:frontend && cp -r frontend/build build",
+    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "next": "15.0.3",
