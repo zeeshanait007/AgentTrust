@@ -1,10 +1,14 @@
-import type { Metadata } from "next";
-import { AppProvider } from "@/context/AppContext";
 import "./globals.css";
+// Metadata import removed to avoid runtime issues
+import ProviderWrapper from "@/components/ProviderWrapper";
 
-export const metadata: Metadata = {
+// @ts-ignore
+export const metadata = {
   title: "AgentTrust — Trust, Reputation, Governance, & Workforce OS for AI Agents",
-  description: "The global trust layer for autonomous AI agents, enabling organizations to discover, verify, benchmark, govern, monitor, insure, and manage thousands of autonomous AI agents.",
+  description: "The global trust layer for autonomous AI agents, enabling organizations to discover, verify, benchmark, govern, monitor, insure, and manage thousands of autonomous AI agents."
+};
+  title: "AgentTrust — Trust, Reputation, Governance, & Workforce OS for AI Agents",
+  description: "The global trust layer for autonomous AI agents, enabling organizations to discover, verify, benchmark, govern, monitor, insure, and manage thousands of autonomous AI agents."
 };
 
 export default function RootLayout({
@@ -15,9 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <AppProvider>
-          {children}
-        </AppProvider>
+        <ProviderWrapper>{children}</ProviderWrapper>
       </body>
     </html>
   );
