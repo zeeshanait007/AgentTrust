@@ -14,12 +14,13 @@ if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir, { recursive: true });
 }
 
+// Next.js is configured via frontend/next.config.ts with distDir: '../build'
+// So at runtime, the build output is at <root>/build/
+// We point Next.js at the frontend dir so it reads its config correctly,
+// but the distDir resolves to the root build/ folder.
 const app = next({
   dev,
-  dir: __dirname,
-  conf: {
-    distDir: 'build',
-  },
+  dir: path.join(__dirname, 'frontend'),
 });
 
 const handle = app.getRequestHandler();
