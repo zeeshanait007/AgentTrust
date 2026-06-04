@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # Main relational database for profiles, telemetry, passports, and analytics
+  postgres:
+    image: postgres:15-alpine
+    container_name: agenttrust-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: agenttrust_secure_password
+      POSTGRES_DB: agenttrust
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Graph database for the Agent Reputation Graph
+  neo4j:
+    image: neo4j:5.12-community
+    container_name: agenttrust-neo4j
+    restart: always
+    ports:
+      - "7474:7474" # HTTP UI
+      - "7687:7687" # Bolt protocol
+    environment:
+      NEO4J_AUTH: neo4j/agenttrust_secure_graph_password
+    volumes:
+      - neo4j_data:/data
+
+  # Key-value cache store for session data and real-time state caching
+  redis:
+    image: redis:7-alpine
+    container_name: agenttrust-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # Unified log indexer and database analytics engine
+  opensearch:
+    image: opensearchproject/opensearch:2.11.0
+    container_name: agenttrust-opensearch
+    restart: always
+    environment:
+      - cluster.name=agenttrust-cluster
+      - node.name=agenttrust-node
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - DISABLE_INSTALL_DEMO_CONFIG=true
+      - DISABLE_SECURITY_PLUGIN=true # For ease of development, security disabled in local compose
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "9200:9200"
+    volumes:
+      - opensearch_data:/usr/share/opensearch/data
+
+volumes:
+  postgres_data:
+  neo4j_data:
+  redis_data:
+  opensearch_data:

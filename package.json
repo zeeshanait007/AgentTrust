@@ -1,0 +1,19 @@
+{
+  "name": "agent-trust-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AgentTrust — Trust, Reputation, Governance, and Workforce Operating System for AI Agents",
+  "scripts": {
+    "setup:backend": "cd backend && pip3 install -r requirements.txt && python3 seed.py",
+    "setup:frontend": "cd frontend && npm install",
+    "setup": "npm run setup:frontend && npm run setup:backend",
+    "dev:backend": "PYTHONPATH=. uvicorn backend.main:app --reload --port 8000",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev": "npx concurrently --kill-others-on-fail \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "test:backend": "cd backend && python3 -m pytest test_api.py"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^8.2.1"
+  }
+}

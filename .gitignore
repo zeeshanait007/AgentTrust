@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Local databases & logs
+*.db
+*.log
+backend/agenttrust.db
+
+# Python
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+*.pyc
+
+# Next.js
+.next/
+frontend/.next/
+out/
+
+# IDEs & System
+.DS_Store
+.vscode/
+.idea/
