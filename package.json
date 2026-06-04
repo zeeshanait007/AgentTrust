@@ -15,7 +15,11 @@
     "prebuild": "npm install --prefix frontend --legacy-peer-deps",
     "build": "npm run build:frontend && cp -r frontend/.next .next"
   },
-  "dependencies": {},
+  "dependencies": {
+    "next": "15.0.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
   "devDependencies": {
     "concurrently": "^8.2.1"
   }
