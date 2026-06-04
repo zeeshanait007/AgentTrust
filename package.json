@@ -13,7 +13,7 @@
     "test:backend": "cd backend && python3 -m pytest test_api.py",
     "build:frontend": "cd frontend && npm run build",
     "prebuild": "npm install --prefix frontend --legacy-peer-deps",
-    "build": "npm run build:frontend"
+    "build": "npm run build:frontend && cp -r frontend/.next .next"
   },
   "dependencies": {},
   "devDependencies": {
