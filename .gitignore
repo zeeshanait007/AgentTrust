@@ -14,10 +14,12 @@ __pycache__/
 venv/
 *.pyc
 
-# Next.js
+# Next.js build output (generated on server during deployment)
 .next/
 frontend/.next/
 out/
+build/
+logs/
 
 # IDEs & System
 .DS_Store
