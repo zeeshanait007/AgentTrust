@@ -3,13 +3,7 @@ import "./globals.css";
 import ProviderWrapper from "@/components/ProviderWrapper";
 
 // @ts-ignore
-export const metadata = {
-  title: "AgentTrust — Trust, Reputation, Governance, & Workforce OS for AI Agents",
-  description: "The global trust layer for autonomous AI agents, enabling organizations to discover, verify, benchmark, govern, monitor, insure, and manage thousands of autonomous AI agents."
-};
-  title: "AgentTrust — Trust, Reputation, Governance, & Workforce OS for AI Agents",
-  description: "The global trust layer for autonomous AI agents, enabling organizations to discover, verify, benchmark, govern, monitor, insure, and manage thousands of autonomous AI agents."
-};
+export const metadata = { title: "AgentTrust — Trust, Reputation, Governance, & Workforce OS for AI Agents", description: "The global trust layer for autonomous AI agents, enabling organizations to discover, verify, benchmark, govern, monitor, insure, and manage thousands of autonomous AI agents." } as any;
 
 export default function RootLayout({
   children,
