@@ -12,6 +12,7 @@
     "dev": "npx concurrently --kill-others-on-fail \"npm run dev:backend\" \"npm run dev:frontend\"",
     "test:backend": "cd backend && python3 -m pytest test_api.py",
     "build:frontend": "cd frontend && npm run build",
+    "prebuild": "npm install --prefix frontend --legacy-peer-deps",
     "build": "npm run build:frontend"
   },
   "dependencies": {},
