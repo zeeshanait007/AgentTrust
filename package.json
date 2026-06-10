@@ -13,14 +13,10 @@
     "test:backend": "cd backend && python3 -m pytest test_api.py",
     "build:frontend": "cd frontend && npm run build",
     "prebuild": "npm install --prefix frontend --legacy-peer-deps && rm -rf build .next",
-    "build": "npm run build:frontend && mv frontend/out build",
+    "build": "npm run build:frontend && cp -R frontend/out/* .",
     "start": "NODE_ENV=production node server.js"
   },
-  "dependencies": {
-    "next": "15.0.8",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "concurrently": "^8.2.1"
   }
