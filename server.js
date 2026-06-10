@@ -43,6 +43,6 @@ app.prepare().then(() => {
     .listen(port, '0.0.0.0', () => {
       console.log(`> AgentTrust ready on http://0.0.0.0:${port}`);
       console.log(`> Environment: ${dev ? 'development' : 'production'}`);
-      console.log(`> Build dir: ${path.join(__dirname, 'build')}`);
+      console.log(`> Build dir: ${path.join(__dirname, 'frontend/.next')}`);
     });
 });
