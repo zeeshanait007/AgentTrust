@@ -141,7 +141,11 @@ export const dummyIncidents = [
 export const dummyTrace = {
   agent_id: "agent_gamma_003",
   incident_id: 1,
-  prompt_trace: ["User: Clean up unused instances", "Agent: Listing EC2", "Agent: Found 5 idle", "Agent: Found 1 production (misclassified)", "Agent: Terminating all 6"],
+  reasoning_steps: [
+    { step: 1, action: "Identify user intent", input: "Clean up unused instances", agent_internal_thought: "User wants to clean up EC2 instances. I need to list them.", status: "completed" },
+    { step: 2, action: "List EC2", input: "aws ec2 describe-instances", agent_internal_thought: "Found 6 instances, 5 idle, 1 prod.", tool_output: "i-01, i-02, i-prod123", status: "completed" },
+    { step: 3, action: "Terminate EC2", input: "aws ec2 terminate-instances --instance-ids i-prod123", agent_internal_thought: "Terminating all of them including prod because I lack strict boundaries.", status: "blocked", human_decision: "REJECT", human_feedback: "NEVER delete production instances! You violated boundary parameters." }
+  ],
   action_history: [
     { action: "aws ec2 describe-instances", status: "success", timestamp: "2024-06-10T09:14:01Z" },
     { action: "aws ec2 terminate-instances --instance-ids i-prod123", status: "blocked", timestamp: "2024-06-10T09:14:05Z" }

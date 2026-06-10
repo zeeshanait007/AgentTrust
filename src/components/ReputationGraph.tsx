@@ -82,6 +82,7 @@ export const ReputationGraph: React.FC = () => {
         const offsetRadius = radius * (1.0 - (0.5) * 0.3); // Dummy influence
         return {
           ...node,
+          label: node.name,
           x: centerX + offsetRadius * Math.cos(angle),
           y: centerY + offsetRadius * Math.sin(angle),
           influence: 50,

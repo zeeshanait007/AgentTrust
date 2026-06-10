@@ -29,7 +29,7 @@ export const Benchmarks: React.FC = () => {
   const { agents } = useApp();
   const [benchmarks, setBenchmarks] = useState<Record<string, LeaderboardItem[]>>({});
   const [loading, setLoading] = useState(false);
-  const [activeSuite, setActiveSuite] = useState("Software Engineering");
+  const [activeSuite, setActiveSuite] = useState("MMLU");
 
   const fetchBenchmarks = async () => {
     try {
@@ -46,9 +46,9 @@ export const Benchmarks: React.FC = () => {
         throw new Error("Fetch failed");
       }
     } catch (e) {
-      console.error("Backend fetch failed, falling back to dummy data", e);
+      console.warn("Backend fetch failed, falling back to dummy data", e);
       setBenchmarks(dummyBenchmarks);
-      setActiveSuite("Software Engineering");
+      setActiveSuite("MMLU");
     } finally {
       setLoading(false);
     }
