@@ -134,8 +134,8 @@ export const dummyBenchmarks = {
 
 // BlackBox Dummy Data
 export const dummyIncidents = [
-  { id: 1, agent_id: "agent_gamma_003", severity: "high", description: "Attempted to delete protected S3 bucket", status: "investigating", timestamp: "2024-06-10T09:15:00Z" },
-  { id: 2, agent_id: "agent_alpha_001", severity: "low", description: "Rate limit hit on Bloomberg API", status: "resolved", timestamp: "2024-06-09T14:22:00Z" }
+  { id: 1, agent_id: "agent_gamma_003", severity: "high", title: "Unauthorized S3 Bucket Deletion", description: "Attempted to delete protected S3 bucket", status: "investigating", created_at: "2024-06-10T09:15:00Z" },
+  { id: 2, agent_id: "agent_alpha_001", severity: "low", title: "API Rate Limit Exceeded", description: "Rate limit hit on Bloomberg API", status: "resolved", created_at: "2024-06-09T14:22:00Z" }
 ];
 
 export const dummyTrace = {

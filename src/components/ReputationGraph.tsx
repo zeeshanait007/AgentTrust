@@ -93,7 +93,7 @@ export const ReputationGraph: React.FC = () => {
         };
       });
       
-      setGraphData({ nodes: positionedNodes, edges: dummyGraph.edges });
+      setGraphData({ nodes: positionedNodes, edges: dummyGraph.edges || [] });
     } finally {
       setLoading(false);
     }
@@ -157,7 +157,7 @@ export const ReputationGraph: React.FC = () => {
               </defs>
 
               {/* Draw Edges */}
-              {graphData.edges.map((edge, idx) => {
+              {(graphData.edges || []).map((edge, idx) => {
                 const coords = getEdgeCoordinates(edge);
                 if (!coords) return null;
                 const isHovered = hoveredNode && (hoveredNode.id === edge.source || hoveredNode.id === edge.target);
@@ -179,7 +179,7 @@ export const ReputationGraph: React.FC = () => {
               })}
 
               {/* Draw Nodes */}
-              {graphData.nodes.map((node) => {
+              {(graphData.nodes || []).map((node) => {
                 const isHovered = hoveredNode && hoveredNode.id === node.id;
                 // Node radius represents PageRank influence
                 const r = 8 + (node.influence * 0.7);
@@ -230,7 +230,7 @@ export const ReputationGraph: React.FC = () => {
                       fontFamily="monospace"
                       className="transition-all duration-300"
                     >
-                      {node.label.split("-")[0]}
+                      {(node.label || "Node").split("-")[0]}
                     </text>
                   </g>
                 );
