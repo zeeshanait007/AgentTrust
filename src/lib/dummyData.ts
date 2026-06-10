@@ -192,7 +192,7 @@ export const dummyGraph = {
     { id: "tool_bloomberg", name: "Bloomberg API", type: "tool", group: 4 },
     { id: "tool_aws", name: "AWS CLI", type: "tool", group: 4 }
   ],
-  links: [
+  edges: [
     { source: "agent_alpha_001", target: "tool_bloomberg", value: 10 },
     { source: "agent_gamma_003", target: "tool_aws", value: 5 },
     { source: "agent_alpha_001", target: "agent_beta_002", value: 2 }
