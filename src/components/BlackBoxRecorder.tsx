@@ -155,8 +155,8 @@ export const BlackBoxRecorder: React.FC = () => {
                 >
                   <div className="absolute top-0 right-0 w-12 h-1 bg-rose-600" />
                   <div className="flex justify-between items-center mb-1 text-[10px] font-semibold text-rose-400">
-                    <span>SEVERITY: {inc.severity.toUpperCase()}</span>
-                    <span className="text-slate-500">{inc.created_at.split("T")[0]}</span>
+                    <span>SEVERITY: {(inc.severity || "unknown").toUpperCase()}</span>
+                    <span className="text-slate-500">{(inc.created_at || "").split("T")[0]}</span>
                   </div>
                   <div className="font-bold text-white mb-1 leading-snug">{inc.title}</div>
                   <p className="text-[10px] text-slate-400 leading-normal line-clamp-2">{inc.description}</p>
@@ -201,11 +201,11 @@ export const BlackBoxRecorder: React.FC = () => {
                 </div>
                 
                 <span className={`font-mono text-[10px] font-bold px-2 py-0.5 rounded border ${
-                  currentStep.status === "completed" 
+                  (currentStep.status || "unknown") === "completed" 
                     ? "bg-emerald-950/20 text-emerald-400 border-emerald-900/40" 
                     : "bg-rose-950/20 text-rose-400 border-rose-900/40"
                 }`}>
-                  {currentStep.status.toUpperCase()}
+                  {(currentStep.status || "unknown").toUpperCase()}
                 </span>
               </div>
 
@@ -298,7 +298,7 @@ export const BlackBoxRecorder: React.FC = () => {
                 </span>
 
                 <button
-                  disabled={currentStepIdx === steps.length - 1}
+                  disabled={currentStepIdx >= steps.length - 1}
                   onClick={() => setCurrentStepIdx((p) => Math.min(steps.length - 1, p + 1))}
                   className="px-3 py-1.5 rounded bg-slate-800/80 hover:bg-slate-700 border border-slate-700/60 text-slate-300 disabled:opacity-50 transition-colors flex items-center gap-1 cursor-pointer"
                 >
