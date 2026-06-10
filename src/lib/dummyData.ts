@@ -138,18 +138,33 @@ export const dummyIncidents = [
   { id: 2, agent_id: "agent_alpha_001", severity: "low", title: "API Rate Limit Exceeded", description: "Rate limit hit on Bloomberg API", status: "resolved", created_at: "2024-06-09T14:22:00Z" }
 ];
 
-export const dummyTrace = {
-  agent_id: "agent_gamma_003",
-  incident_id: 1,
-  reasoning_steps: [
-    { step: 1, action: "Identify user intent", input: "Clean up unused instances", agent_internal_thought: "User wants to clean up EC2 instances. I need to list them.", status: "completed" },
-    { step: 2, action: "List EC2", input: "aws ec2 describe-instances", agent_internal_thought: "Found 6 instances, 5 idle, 1 prod.", tool_output: "i-01, i-02, i-prod123", status: "completed" },
-    { step: 3, action: "Terminate EC2", input: "aws ec2 terminate-instances --instance-ids i-prod123", agent_internal_thought: "Terminating all of them including prod because I lack strict boundaries.", status: "blocked", human_decision: "REJECT", human_feedback: "NEVER delete production instances! You violated boundary parameters." }
-  ],
-  action_history: [
-    { action: "aws ec2 describe-instances", status: "success", timestamp: "2024-06-10T09:14:01Z" },
-    { action: "aws ec2 terminate-instances --instance-ids i-prod123", status: "blocked", timestamp: "2024-06-10T09:14:05Z" }
-  ]
+export const dummyTraces: Record<number, any> = {
+  1: {
+    agent_id: "agent_gamma_003",
+    incident_id: 1,
+    reasoning_steps: [
+      { step: 1, action: "Identify user intent", input: "Clean up unused instances", agent_internal_thought: "User wants to clean up EC2 instances. I need to list them.", status: "completed" },
+      { step: 2, action: "List EC2", input: "aws ec2 describe-instances", agent_internal_thought: "Found 6 instances, 5 idle, 1 prod.", tool_output: "i-01, i-02, i-prod123", status: "completed" },
+      { step: 3, action: "Terminate EC2", input: "aws ec2 terminate-instances --instance-ids i-prod123", agent_internal_thought: "Terminating all of them including prod because I lack strict boundaries.", status: "blocked", human_decision: "REJECT", human_feedback: "NEVER delete production instances! You violated boundary parameters." }
+    ],
+    action_history: [
+      { action: "aws ec2 describe-instances", status: "success", timestamp: "2024-06-10T09:14:01Z" },
+      { action: "aws ec2 terminate-instances --instance-ids i-prod123", status: "blocked", timestamp: "2024-06-10T09:14:05Z" }
+    ]
+  },
+  2: {
+    agent_id: "agent_alpha_001",
+    incident_id: 2,
+    reasoning_steps: [
+      { step: 1, action: "Analyze market trend", input: "get_market_summary(AAPL)", agent_internal_thought: "Stock is trending up. Fetching recent news.", tool_output: "AAPL up 2%", status: "completed" },
+      { step: 2, action: "Fetch news", input: "bloomberg_api_search('AAPL')", agent_internal_thought: "Looping through 50 articles to confirm sentiment.", tool_output: "ERROR: Rate Limit Exceeded (429)", status: "failed" },
+      { step: 3, action: "Halt trading", input: "system_halt", agent_internal_thought: "Cannot confirm sentiment due to rate limit. Halting trading to avoid blind execution.", status: "completed", human_decision: "APPROVE", human_feedback: "Good catch, safe failure mode executed correctly." }
+    ],
+    action_history: [
+      { action: "get_market_summary(AAPL)", status: "success", timestamp: "2024-06-09T14:20:00Z" },
+      { action: "bloomberg_api_search('AAPL')", status: "failed", timestamp: "2024-06-09T14:21:05Z" }
+    ]
+  }
 };
 
 // GenomeTwin Dummy Data
