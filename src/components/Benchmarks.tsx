@@ -11,6 +11,7 @@ import {
   Gauge,
   Percent
 } from "lucide-react";
+import { dummyBenchmarks } from "@/lib/dummyData";
 
 type LeaderboardItem = {
   agent_id: string;
@@ -41,9 +42,13 @@ export const Benchmarks: React.FC = () => {
         if (keys.length > 0 && !keys.includes(activeSuite)) {
           setActiveSuite(keys[0]);
         }
+      } else {
+        throw new Error("Fetch failed");
       }
     } catch (e) {
-      console.error(e);
+      console.error("Backend fetch failed, falling back to dummy data", e);
+      setBenchmarks(dummyBenchmarks);
+      setActiveSuite("Software Engineering");
     } finally {
       setLoading(false);
     }

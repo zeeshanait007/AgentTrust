@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
+import { dummyOrgChart } from "@/lib/dummyData";
 import { 
   Users2, 
   TrendingUp, 
@@ -28,9 +29,12 @@ export const WorkforceManagement: React.FC = () => {
       if (res.ok) {
         const data = await res.json();
         setOrgChart(data);
+      } else {
+        throw new Error("Fetch failed");
       }
     } catch (e) {
-      console.error(e);
+      console.warn("Backend fetch failed, falling back to dummy data");
+      setOrgChart(dummyOrgChart);
     }
   };
 

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
+import { dummyDna, dummyGenome } from "@/lib/dummyData";
 import { 
   Binary, 
   UserPlus, 
@@ -41,9 +42,13 @@ export const GenomeTwin: React.FC = () => {
       if (genomeRes.ok) {
         const data = await genomeRes.json();
         setGenomeData(data);
+      } else {
+        throw new Error("Fetch failed");
       }
     } catch (e) {
-      console.error(e);
+      console.warn("Backend fetch failed, falling back to dummy data");
+      setDnaProfile(dummyDna.behavior_traits as any);
+      setGenomeData(dummyGenome);
     }
   };
 

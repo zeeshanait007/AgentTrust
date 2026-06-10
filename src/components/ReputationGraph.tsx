@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
+import { dummyGraph } from "@/lib/dummyData";
 import { 
   GitFork, 
   RefreshCw, 
@@ -64,9 +65,34 @@ export const ReputationGraph: React.FC = () => {
         });
         
         setGraphData({ nodes: positionedNodes, edges: data.edges });
+      } else {
+        throw new Error("Fetch failed");
       }
     } catch (e) {
-      console.error(e);
+      console.warn("Backend fetch failed, falling back to dummy data");
+      
+      const width = 600;
+      const height = 350;
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const radius = 135;
+      
+      const positionedNodes = dummyGraph.nodes.map((node: any, index: number) => {
+        const angle = (index / dummyGraph.nodes.length) * 2 * Math.PI;
+        const offsetRadius = radius * (1.0 - (0.5) * 0.3); // Dummy influence
+        return {
+          ...node,
+          x: centerX + offsetRadius * Math.cos(angle),
+          y: centerY + offsetRadius * Math.sin(angle),
+          influence: 50,
+          status: "active",
+          trust_score: 900,
+          career_stage: "senior",
+          framework: "LangChain"
+        };
+      });
+      
+      setGraphData({ nodes: positionedNodes, edges: dummyGraph.edges });
     } finally {
       setLoading(false);
     }

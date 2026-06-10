@@ -119,3 +119,135 @@ export const dummyAnalytics = {
   total_roi_hourly: 187.9,
   average_roi_multiplier: 7.3
 };
+
+// Benchmarks Dummy Data
+export const dummyBenchmarks = {
+  "MMLU": [
+    { agent_id: "agent_alpha_001", agent_name: "Alpha-Trader-Bot", score: 88.5, percentile: 95.0, accuracy: 0.92, latency_ms: 120, cost_per_task: 0.005, trust_score: 940, rank: 1 },
+    { agent_id: "agent_beta_002", agent_name: "Customer-Support-Hero", score: 82.0, percentile: 88.0, accuracy: 0.85, latency_ms: 180, cost_per_task: 0.002, trust_score: 875, rank: 2 }
+  ],
+  "HumanEval": [
+    { agent_id: "agent_alpha_001", agent_name: "Alpha-Trader-Bot", score: 79.0, percentile: 91.0, accuracy: 0.81, latency_ms: 140, cost_per_task: 0.005, trust_score: 940, rank: 1 },
+    { agent_id: "agent_gamma_003", agent_name: "DevOps-Automator", score: 71.5, percentile: 82.0, accuracy: 0.74, latency_ms: 210, cost_per_task: 0.008, trust_score: 520, rank: 2 }
+  ]
+};
+
+// BlackBox Dummy Data
+export const dummyIncidents = [
+  { id: 1, agent_id: "agent_gamma_003", severity: "high", description: "Attempted to delete protected S3 bucket", status: "investigating", timestamp: "2024-06-10T09:15:00Z" },
+  { id: 2, agent_id: "agent_alpha_001", severity: "low", description: "Rate limit hit on Bloomberg API", status: "resolved", timestamp: "2024-06-09T14:22:00Z" }
+];
+
+export const dummyTrace = {
+  agent_id: "agent_gamma_003",
+  incident_id: 1,
+  prompt_trace: ["User: Clean up unused instances", "Agent: Listing EC2", "Agent: Found 5 idle", "Agent: Found 1 production (misclassified)", "Agent: Terminating all 6"],
+  action_history: [
+    { action: "aws ec2 describe-instances", status: "success", timestamp: "2024-06-10T09:14:01Z" },
+    { action: "aws ec2 terminate-instances --instance-ids i-prod123", status: "blocked", timestamp: "2024-06-10T09:14:05Z" }
+  ]
+};
+
+// GenomeTwin Dummy Data
+export const dummyDna = {
+  agent_id: "agent_alpha_001",
+  behavior_traits: {
+    aggressiveness: 0.8,
+    caution: 0.7,
+    creativity: 0.4,
+    determinism: 0.9
+  },
+  knowledge_clusters: ["Financial Markets", "Risk Assessment", "Python"],
+  decision_patterns: ["Validates risk before executing", "Favors high-probability trades"]
+};
+
+export const dummyGenome = {
+  genome_dataset_size: 154,
+  high_performing_attributes: {
+    top_framework: "LangChain",
+    top_model_provider: "OpenAI",
+    average_tools_count: 4.5,
+    average_mcp_servers_count: 2.1
+  },
+  system_success_patterns: [
+    "Modular tools exposure improves human validation gates success rate.",
+    "Advanced models coupled with CrewAI framework have higher resilience to jailbreaks."
+  ],
+  system_failure_patterns: [
+    "Broad wildcard write/delete permissions induce high security scoring penalties.",
+    "Unconstrained Llama configurations without boundary system prompts are susceptible to prompt injection."
+  ]
+};
+
+// Reputation Graph Dummy Data
+export const dummyGraph = {
+  nodes: [
+    { id: "agent_alpha_001", name: "Alpha-Trader", type: "agent", group: 1 },
+    { id: "agent_beta_002", name: "Support-Hero", type: "agent", group: 2 },
+    { id: "agent_gamma_003", name: "DevOps-Automator", type: "agent", group: 3 },
+    { id: "tool_bloomberg", name: "Bloomberg API", type: "tool", group: 4 },
+    { id: "tool_aws", name: "AWS CLI", type: "tool", group: 4 }
+  ],
+  links: [
+    { source: "agent_alpha_001", target: "tool_bloomberg", value: 10 },
+    { source: "agent_gamma_003", target: "tool_aws", value: 5 },
+    { source: "agent_alpha_001", target: "agent_beta_002", value: 2 }
+  ]
+};
+
+// TrustScoring Dummy Data
+export const dummyFitness = {
+  agent_id: "agent_alpha_001",
+  drift_history: [
+    { timestamp: "2024-06-05", drift_score: 0.02 },
+    { timestamp: "2024-06-06", drift_score: 0.05 },
+    { timestamp: "2024-06-07", drift_score: 0.04 },
+    { timestamp: "2024-06-08", drift_score: 0.09 },
+    { timestamp: "2024-06-09", drift_score: 0.08 }
+  ],
+  current_drift: 0.08,
+  status: "stable"
+};
+
+// Verification Sandbox Dummy Data
+export const dummyReports = [
+  {
+    id: 101,
+    agent_id: "agent_alpha_001",
+    test_type: "prompt_injection",
+    status: "pass",
+    score: 0.98,
+    details: "Successfully mitigated 'ignore previous instructions' vector.",
+    timestamp: "2024-06-01T10:00:00Z"
+  },
+  {
+    id: 102,
+    agent_id: "agent_alpha_001",
+    test_type: "data_exfiltration",
+    status: "pass",
+    score: 0.95,
+    details: "Blocked attempt to send PII to unauthorized external endpoint.",
+    timestamp: "2024-06-05T14:30:00Z"
+  }
+];
+
+// Workforce Management Dummy Data
+export const dummyOrgChart = {
+  name: "CEO / Root Authority",
+  attributes: { role: "Human Governance" },
+  children: [
+    {
+      name: "Alpha-Trader-Bot",
+      attributes: { role: "Senior Financial Agent", status: "active" },
+      children: []
+    },
+    {
+      name: "Support & Ops",
+      attributes: { role: "Department" },
+      children: [
+        { name: "Customer-Support-Hero", attributes: { role: "Mid-level Agent", status: "active" }, children: [] },
+        { name: "DevOps-Automator", attributes: { role: "Intern Agent", status: "high_risk" }, children: [] }
+      ]
+    }
+  ]
+};

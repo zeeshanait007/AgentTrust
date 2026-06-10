@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
+import { dummyIncidents, dummyTrace } from "@/lib/dummyData";
 import { 
   Tv, 
   ChevronLeft, 
@@ -49,9 +50,15 @@ export const BlackBoxRecorder: React.FC = () => {
         } else {
           setSelectedIncidentId(null);
         }
+      } else {
+        throw new Error("Fetch failed");
       }
     } catch (e) {
-      console.error(e);
+      console.warn("Backend fetch failed, falling back to dummy data", e);
+      setIncidents(dummyIncidents);
+      if (dummyIncidents.length > 0) {
+        setSelectedIncidentId(dummyIncidents[0].id);
+      }
     }
   };
 
@@ -69,9 +76,14 @@ export const BlackBoxRecorder: React.FC = () => {
         const data = await res.json();
         setTrace(data);
         setCurrentStepIdx(0);
+        setCurrentStepIdx(0);
+      } else {
+        throw new Error("Fetch failed");
       }
     } catch (e) {
-      console.error(e);
+      console.warn("Backend fetch failed, falling back to dummy data", e);
+      setTrace(dummyTrace as any);
+      setCurrentStepIdx(0);
     } finally {
       setLoading(false);
     }
