@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import confetti from "canvas-confetti";
+import { dummyAgents, dummyAnalytics } from "@/lib/dummyData";
 
 export type Agent = {
   id: string;
@@ -109,15 +110,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           // Default selection
           setSelectedAgentId(data[0].id);
         }
+      } else {
+        throw new Error("Failed to fetch agents");
       }
 
       const analyticsRes = await fetch(`${host}/api/v1/workforce/analytics`);
       if (analyticsRes.ok) {
         const data = await analyticsRes.json();
         setAnalytics(data);
+      } else {
+        throw new Error("Failed to fetch analytics");
       }
     } catch (e) {
-      console.error("Backend fetch failed. Make sure FastAPI server is running on http://localhost:8000.", e);
+      console.warn("Backend fetch failed, falling back to dummy data for demonstration.");
+      setAgents(dummyAgents);
+      setAnalytics(dummyAnalytics);
+      if (!selectedAgentId) {
+        setSelectedAgentId(dummyAgents[0].id);
+      }
     } finally {
       setLoading(false);
     }
